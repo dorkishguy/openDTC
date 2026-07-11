@@ -20,8 +20,8 @@ c = conn.cursor()
 # c.execute("SELECT * FROM trips;")
 # print(c.fetchmany(5))
 
-c.execute("SELECT COUNT(*) FROM trips;")
-row_count = c.fetchone()
+c.execute("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%';")
+row_count = c.fetchall()
 print(row_count)
 
 conn.commit()
