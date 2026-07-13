@@ -1,4 +1,5 @@
 from google.transit import gtfs_realtime_pb2
+from google.protobuf.json_format import MessageToDict
 import requests
 import sys
 import requests
@@ -8,20 +9,23 @@ import os
 load_dotenv()
 API_KEY = os.getenv("API_KEY")
 
-# if len(sys.argv) == 3:
-# bus = sys.argv[1]
-# stop = sys.argv[2]
-feed = gtfs_realtime_pb2.FeedMessage()
-response = requests.get(f'https://otd.delhi.gov.in/api/realtime/VehiclePositions.pb?key={API_KEY}')
-response = feed.ParseFromString(response.content)
-print(response)
-for entity in feed.entity:
-  print(entity)
+def get_pb():
+    r = requests.get(f'https://otd.delhi.gov.in/api/realtime/VehiclePositions.pb?key={API_KEY}')
+    print("downloaded")
+    with open("data.pb", "wb") as file:
+        file.write(r.content)
+    print("saved")
 
+def get_data():
+    get_pb()
+    data = []
+    with open("data.pb", "rb") as file:
+        response = file.read()
+    feed = gtfs_realtime_pb2.FeedMessage()
+    response = feed.ParseFromString(response)
+    for entity in feed.entity:
+        entity_data = MessageToDict(entity)
+        data.append(entity_data)
+    print(data)
 
-# elif len(sys.argv) < 3:
-#     print("add bus code")
-# elif len(sys.argv) == 2: 
-#     print("add stop name")
-# elif len(sys.argv) == 1:
-#     print("add bus code and stop")
+get_data()
