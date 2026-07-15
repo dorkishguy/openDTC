@@ -18,7 +18,7 @@ Project structure
 │   └── requirements.txt
 ├── frontend/
 │   ├── maps.py                # builds index.html — stops + live Realtime bus layer
-│   └── static.db               # GTFS static data (stop_lat, stop_lon, stop_name)
+│   └── static.db               # GTFS static data 
 └── README.md
 
 Setup
