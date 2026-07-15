@@ -4,22 +4,18 @@ from dotenv import load_dotenv
 import requests
 import requests
 import os
-import json
 
 load_dotenv()
 API_KEY = os.getenv("API_KEY")
 
 def get_pb():
     r = requests.get(f'https://otd.delhi.gov.in/api/realtime/VehiclePositions.pb?key={API_KEY}')
-    with open("data.pb", "wb") as file:
-        file.write(r.content)
-
-def get_data():
-    data = []
-    with open("data.pb", "rb") as file:
-        response = file.read()
     feed = gtfs_realtime_pb2.FeedMessage()
-    response = feed.ParseFromString(response)
+    feed.ParseFromString(r.content)
+    return feed
+
+def get_data(feed):
+    data = []
     for entity in feed.entity:
         entity_data = MessageToDict(entity)
         data.append(entity_data)
@@ -42,7 +38,9 @@ def convert_to_geojson(datas):
     return geojson
     
 def main():
-    convert_to_geojson(get_data())
+    data = get_pb()
+    data = convert_to_geojson(get_data(data))
+    print(data)
 
 if __name__ == "__main__":
     main()
