@@ -61,4 +61,4 @@ Notes
 Vehicle markers update via polling (default interval: 30s) — tune interval in maps.py to match how often the upstream feed actually refreshes.
 Bus stop data (static.db) is static reference data, read-only at runtime.
 
-* This readme was written by AI I haven't used AI anywhere else
+* This readme was written by AI and the vercel setup was also done with the help of AI I haven't used AI anywhere else
