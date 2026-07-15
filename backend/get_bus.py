@@ -2,7 +2,6 @@ from google.transit import gtfs_realtime_pb2
 from google.protobuf.json_format import MessageToDict
 from dotenv import load_dotenv
 import requests
-import requests
 import os
 
 load_dotenv()
