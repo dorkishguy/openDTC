@@ -2,7 +2,6 @@ import folium
 from folium import JsCode
 from folium.plugins import Realtime, MarkerCluster
 import sqlite3
-from backend.get_bus import get_data
 
 def db_get():
     conn = sqlite3.connect("static.db")
@@ -12,7 +11,7 @@ def db_get():
 
 def add_to_map(stop_data):
 
-    source = "http://127.0.0.1:8000"
+    source = "https://open-dtc-hvvg.vercel.app/"
     m = folium.Map(location=(28.683891,77.222282), zoom_start=12, prefer_canvas=True)
     marker_cluster = MarkerCluster().add_to(m)
 
@@ -53,3 +52,7 @@ def add_to_map(stop_data):
 
     m.save("index.html")
 
+def main():
+    add_to_map(db_get())
+
+main()
