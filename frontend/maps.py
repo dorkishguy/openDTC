@@ -12,7 +12,7 @@ def db_get():
 def add_to_map(stop_data):
 
     source = "https://open-dtc-hvvg.vercel.app/"
-    m = folium.Map(location=(28.683891,77.222282), zoom_start=12, prefer_canvas=True)
+    m = folium.Map(location=(28.683891,77.222282), zoom_start=12, prefer_canvas=True, tiles='OpenStreetMap')
     marker_cluster = MarkerCluster().add_to(m)
 
     for stop in stop_data:
